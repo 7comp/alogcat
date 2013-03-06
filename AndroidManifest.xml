@@ -5,12 +5,13 @@
     android:versionName="2.6.1" >
 
     <uses-sdk
-        android:minSdkVersion="3"
-        android:targetSdkVersion="11" />
+        android:minSdkVersion="14"
+        android:targetSdkVersion="16" />
 
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
 
     <!-- for GoogleTV -->
     <uses-feature
