@@ -4,9 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -69,8 +68,22 @@ public class Logcat {
 		mAsRoot = prefs.isRootOn();
 	}
 
+    private List<String> getLogcatArgs() {
+        List<String> args = new ArrayList<String>(Arrays.asList("logcat", "-v"));
+        args.add(mFormat.getValue());
+        if (mBuffer != Buffer.MAIN) {
+            args.add("-b");
+            args.add(mBuffer.getValue());
+        }
+        args.add("*:" + mLevel);
+        return args;
+    }
+
+    public static Process getLogcatProcess(List<String> args) throws IOException {
+        return Runtime.getRuntime().exec(args.toArray(new String[args.size()]));
+    }
+
 	public void start() {
-		// Log.d("alogcat", "starting ...");
 		stop();
 
 		mRunning = true;
@@ -83,23 +96,12 @@ public class Logcat {
 			Message m = Message.obtain(mHandler, LogActivity.CLEAR_WHAT);
 			mHandler.sendMessage(m);
 
-			List<String> progs = new ArrayList<String>();
+            if (mAsRoot) {
+                SuperUserHelper.requestRoot(mContext);
+            }
 
-			if(mAsRoot){
-				progs.add("su");
-				progs.add("-c");
-			}
-			progs.add("logcat");
-			progs.add("-v");
-			progs.add(mFormat.getValue());
-			if (mBuffer != Buffer.MAIN) {
-				progs.add("-b");
-				progs.add(mBuffer.getValue());
-			}
-			progs.add("*:" + mLevel);
-
-			logcatProc = Runtime.getRuntime()
-					.exec(progs.toArray(new String[0]));
+			List<String> progs = getLogcatArgs();
+			logcatProc = getLogcatProcess(progs);
 
 			mReader = new BufferedReader(new InputStreamReader(
 					logcatProc.getInputStream()), 1024);
