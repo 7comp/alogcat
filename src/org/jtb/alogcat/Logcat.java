@@ -1,6 +1,7 @@
 package org.jtb.alogcat;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -18,8 +19,9 @@ import android.util.Log;
 
 public class Logcat {
 	private static final long CAT_DELAY = 1;
+    private static final String TAG = "aLogcat";
 
-	private Level mLevel = null;
+    private Level mLevel = null;
 	private String mFilter = null;
 	private Pattern mFilterPattern = null;
 	private boolean mRunning = false;
@@ -96,12 +98,27 @@ public class Logcat {
 			Message m = Message.obtain(mHandler, LogActivity.CLEAR_WHAT);
 			mHandler.sendMessage(m);
 
-            if (mAsRoot) {
-                SuperUserHelper.requestRoot(mContext);
+        	List<String> args = getLogcatArgs();
+
+        	if (mAsRoot) {
+                try {
+                    // Preform su to get root privledges
+                    logcatProc = Runtime.getRuntime().exec("su");
+                    // Write the logcat command and args to the process
+                    DataOutputStream os = new DataOutputStream(logcatProc.getOutputStream());
+                    for (String arg : args) {
+                        os.writeChars(arg + " ");
+                    }
+                    os.writeChar('\n');
+                } catch (IOException e) {
+                    Log.w(TAG, "Cannot obtain root", e);
+                }
+
             }
 
-			List<String> progs = getLogcatArgs();
-			logcatProc = getLogcatProcess(progs);
+            if (logcatProc == null) {
+                logcatProc = getLogcatProcess(args);
+            }
 
 			mReader = new BufferedReader(new InputStreamReader(
 					logcatProc.getInputStream()), 1024);
@@ -131,7 +148,7 @@ public class Logcat {
 				}
 			}
 		} catch (IOException e) {
-			Log.e("alogcat", "error reading log", e);
+			Log.e(TAG, "error reading log", e);
 			return;
 		} finally {
 			// Log.d("alogcat", "stopped");
@@ -145,7 +162,7 @@ public class Logcat {
 					mReader.close();
 					mReader = null;
 				} catch (IOException e) {
-					Log.e("alogcat", "error closing stream", e);
+					Log.e(TAG, "error closing stream", e);
 				}
 			}
 		}
