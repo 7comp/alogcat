@@ -61,7 +61,7 @@
     
     <PreferenceCategory android:title="Advanced" >
         <CheckBoxPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="runAsRoot"
             android:summary="Run as Root?"
             android:title="Root?" />        
