@@ -156,6 +156,6 @@ public class Prefs {
 	}
 	
 	public boolean isRootOn() {
-		return getBoolean(RUN_AS_ROOT_KEY, false);
+		return getBoolean(RUN_AS_ROOT_KEY, true);
 	}
 }
