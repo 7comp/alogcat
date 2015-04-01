@@ -2,11 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.jtb.alogcat"
     android:versionCode="45"
-    android:versionName="2.8.0" >
+    android:versionName="2.9.0" >
 
     <uses-sdk
         android:minSdkVersion="3"
-        android:targetSdkVersion="21" />
+        android:targetSdkVersion="22" />
 
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
