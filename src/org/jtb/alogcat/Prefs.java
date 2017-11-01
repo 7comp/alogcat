@@ -6,7 +6,7 @@ import java.util.regex.PatternSyntaxException;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.preference.PreferenceManager;
+import android.preference.v7.PreferenceManager;
 import android.util.Log;
 import org.jtb.alogcat.R;
 

@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
-import android.preference.ListPreference;
-import android.preference.SwitchPreference;
-import android.preference.PreferenceActivity;
+import android.preference.v7.ListPreference;
+import android.support.v14.preference.SwitchPreference;
+import android.preference.v7.PreferenceActivity;
 import org.jtb.alogcat.R;
 
 public class PrefsActivity extends PreferenceActivity implements
