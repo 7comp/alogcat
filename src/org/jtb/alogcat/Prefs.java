@@ -6,7 +6,7 @@ import java.util.regex.PatternSyntaxException;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.preference.v7.PreferenceManager;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import org.jtb.alogcat.R;
 
@@ -156,6 +156,6 @@ public class Prefs {
 	}
 	
 	public boolean isRootOn() {
-		return getBoolean(RUN_AS_ROOT_KEY, true);
+		return getBoolean(RUN_AS_ROOT_KEY, false);
 	}
 }

@@ -61,7 +61,7 @@
     
     <PreferenceCategory android:title="Advanced" >
         <SwitchPreference
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="runAsRoot"
             android:summary="Disable Root?"
             android:title="Root?" />        
