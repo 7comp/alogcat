@@ -16,7 +16,7 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
 
 LOCAL_SRC_FILES := $(call all-java-files-under, src)
 
-LOCAL_SDK_VERSION := 23
+LOCAL_SDK_VERSION := 27
 
 LOCAL_PACKAGE_NAME := alogcat
 
